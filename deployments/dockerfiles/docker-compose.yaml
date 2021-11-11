@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: user18081971/2021-erep-postgres:latest
+    image: user18081971/2021-erep-postgres:main
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "password"
@@ -8,11 +8,11 @@ services:
     ports:
       - "15432:5432"
   solr:
-    image: user18081971/2021-erep-solr:latest
+    image: user18081971/2021-erep-solr:main
     ports:
       - "8983:8983"
 
-probing:
+  probing:
     container_name: probing_service
     image: user18081971/scheduling:master
     ports:
