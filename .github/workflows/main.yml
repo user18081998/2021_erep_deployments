@@ -2,7 +2,7 @@ name: push_dockerfiles_to_registry
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -30,10 +30,10 @@ jobs:
           context: ./deployments/postgres
           file: Dockerfile
           push: true
-          tags: ${{steps.pg-meta1.outputs.tag}}
-          labels: ${{steps.pg-meta1.outputs.labels}}
+          tags: ${{ steps.pg-meta1.outputs.tags }}
+          labels: ${{ steps.pg-meta1.outputs.labels }}
 
-    #### pg image build ####
+    #### solr image build ####
       - name: solr metadata
         id: solr-meta1
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
@@ -45,5 +45,5 @@ jobs:
           context: ./deployments/solr
           file: Dockerfile
           push: true
-          tags: ${{steps.pg-meta1.outputs.tag}}
-          labels: ${{steps.pg-meta1.outputs.labels}}
+          tags: ${{ steps.solr-meta1.outputs.tags }}
+          labels: ${{ steps.solr-meta1.outputs.labels }}
