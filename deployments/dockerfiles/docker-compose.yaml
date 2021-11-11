@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: 28029fd6653d
+    image: user18081971/2021-erep-postgres:latest
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "password"
@@ -8,6 +8,59 @@ services:
     ports:
       - "15432:5432"
   solr:
-    image: f2aab891213b
+    image: user18081971/2021-erep-solr:latest
     ports:
       - "8983:8983"
+
+probing:
+    container_name: probing_service
+    image: user18081971/scheduling:master
+    ports:
+      - 18081:18081
+
+  crawling:
+    container_name: crawling_service
+    image: user18081971/crawling:master
+    ports:
+      - 18082:18082
+
+  scraping:
+    container_name: scraping_service
+    image: user18081971/scraping:master
+    ports:
+      - 18083:18083
+
+  scheduling:
+    container_name: scheduling_service
+    image: user18081971/scheduling:master
+    ports:
+      - 18085:18085
+
+  searching:
+    container_name: searching_service
+    image: user18081971/searching:master
+    ports:
+      - 18084:18084
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 22181:2181
+
+  kafk:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - 29092:29092
+      - 9092:9092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafk:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
