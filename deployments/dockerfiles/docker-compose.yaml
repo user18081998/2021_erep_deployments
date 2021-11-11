@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: 28029fd6653d
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+      PGDATA: "/data/postgres"
+    ports:
+      - "15432:5432"
+  solr:
+    image: f2aab891213b
+    ports:
+      - "8983:8983"
