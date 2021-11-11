@@ -74,3 +74,19 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  keycloak:
+    image: user18081971/2021-erep-keycloak:main
+    ports:
+      - "8180:8080"
+      - "8543:8443"
+    environment:
+      DB_VENDOR: "POSTGRES"
+      DB_ADDR: "postgres"
+      DB_DATABASE: "keycloak"
+      DB_USER: "postgres"
+      DB_SCHEMA: "public"
+      DB_PASSWORD: "password"
+      KEYCLOAK_USER: "admin"
+      KEYCLOAK_PASSWORD: "admin"
+      KEYCLOAK_IMPORT: "/tmp/quarkus-realm.json"

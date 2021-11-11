@@ -45,3 +45,17 @@ jobs:
           push: true
           tags: ${{ steps.solr-meta1.outputs.tags }}
           labels: ${{ steps.solr-meta1.outputs.labels }}
+
+    #### keycloak image build ####
+      - name: keycloak metadata
+        id: keycloak-meta1
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: user18081971/2021-erep-keycloak
+      - name: keycloak build and push
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: ./deployments/dockerfiles/keycloak
+          push: true
+          tags: ${{ steps.keycloak-meta1.outputs.tags }}
+          labels: ${{ steps.keycloak-meta1.outputs.labels }}
