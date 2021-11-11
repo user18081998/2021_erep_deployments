@@ -28,7 +28,6 @@ jobs:
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: ./deployments/dockerfiles/postgres
-          file: Dockerfile
           push: true
           tags: ${{ steps.pg-meta1.outputs.tags }}
           labels: ${{ steps.pg-meta1.outputs.labels }}
@@ -43,7 +42,6 @@ jobs:
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: ./deployments/dockerfiles/solr
-          file: Dockerfile
           push: true
           tags: ${{ steps.solr-meta1.outputs.tags }}
           labels: ${{ steps.solr-meta1.outputs.labels }}
