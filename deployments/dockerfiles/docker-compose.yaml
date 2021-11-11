@@ -15,30 +15,40 @@ services:
   probing:
     container_name: probing_service
     image: user18081971/scheduling:master
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafk:9092
     ports:
       - 18081:18081
 
   crawling:
     container_name: crawling_service
     image: user18081971/crawling:master
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafk:9092
     ports:
       - 18082:18082
 
   scraping:
     container_name: scraping_service
     image: user18081971/scraping:master
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafk:9092
     ports:
       - 18083:18083
 
   scheduling:
     container_name: scheduling_service
     image: user18081971/scheduling:master
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafk:9092
     ports:
       - 18085:18085
 
   searching:
     container_name: searching_service
     image: user18081971/searching:master
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafk:9092
     ports:
       - 18084:18084
 
