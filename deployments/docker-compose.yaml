@@ -9,7 +9,7 @@ services:
     ports:
       - "15432:5432"
 
-  solr:
+  sol:
     image: user18081971/2021-erep-solr:main
     ports:
       - "8983:8983"
@@ -22,6 +22,7 @@ services:
       QUARKUS_HTTP_PORT: 8080
       QUARKUS_OIDC_AUTH_SERVER_URL: http://keycloak:8180/auth/realms/quarkus
       QUARKUS_OIDC_CLIENT_AUTH_SERVER_URL: http://keycloak:8180/auth/realms/quarkus
+
     ports:
       - 8080:8080
 
@@ -40,6 +41,7 @@ services:
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafk:9092
       QUARKUS_HTTP_PORT: 8080
+      COM_DRAVASSOR_SCRAPING_INDEXING_SOLR_URL: http://sol:8983/solr
     ports:
       - 8080:8080
 
@@ -58,6 +60,7 @@ services:
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafk:9092
       QUARKUS_HTTP_PORT: 8080
+      COM_DRAVASSOR_SEARCHING_SOLR_URL: http://sol:8983/solr
     ports:
       - 8080:8080
 
