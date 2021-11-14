@@ -59,3 +59,17 @@ jobs:
           push: true
           tags: ${{ steps.keycloak-meta1.outputs.tags }}
           labels: ${{ steps.keycloak-meta1.outputs.labels }}
+
+    #### prometheus image build ####
+      - name: prometheus metadata
+        id: prometheus-meta1
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: user18081971/2021-erep-prometheus
+      - name: prometheus build and push
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: ./deployments/dockerfiles/prometheus
+          push: true
+          tags: ${{ steps.prometheus-meta1.outputs.tags }}
+          labels: ${{ steps.prometheus-meta1.outputs.labels }}
