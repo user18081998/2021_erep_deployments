@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sol
+  namespace: n1-user18081998
+  labels:
+    app: sol
+spec: 
+  selector:
+    matchLabels:
+      app: sol
+  template:
+    metadata:
+      labels:
+        app: sol
+    spec:
+      containers:
+      - name: sol
+        image: user18081971/2021-erep-solr:main
+        ports:
+          - containerPort: 8983
+            name: sol
+        resources:
+          limits:
+            cpu: "1"
+            memory: "1Gi"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sol
+  namespace: n1-user18081998
+  labels:
+    app: sol
+spec:
+  ports:
+    - port: 8983
+      targetPort: 8983
+  selector:
+    app: sol

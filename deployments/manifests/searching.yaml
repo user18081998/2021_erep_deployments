@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: searching-deployment
+  namespace: n1-user18081998
+  labels:
+    app: searching
+spec:
+  selector:
+    matchLabels:
+      app: searching
+  template:
+    metadata:
+      labels:
+        app: searching
+    spec:
+      containers:
+      - name: searching
+        image: user18081971/searching:deployments
+        ports: 
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 500m
+            memory: 500Mi
+        env:
+        - name: QUARKUS_HTTP_PORT
+          value: "8080"
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: "kafka-zookeeper:9092"
+        - name: COM_DRAVASSOR_SEARCHING_SOLR_URL
+          value: http://sol:8983/solr
+        imagePullPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: searching-service
+  namespace: n1-user18081998
+  labels:
+    app: searching
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: searching
+  type: LoadBalancer

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: probing-deployment
+  namespace: n1-user18081998
+  labels:
+    app: probing
+spec:
+  selector:
+    matchLabels:
+      app: probing
+  template:
+    metadata:
+      labels:
+        app: probing
+    spec:
+      containers:
+      - name: probing
+        image: user18081971/probing:deployments
+        ports: 
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 500m
+            memory: 600Mi
+        env:
+        - name: QUARKUS_HTTP_PORT
+          value: "8080"
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: "kafka-zookeeper:9092"
+        - name: QUARKUS_OIDC_AUTH_SERVER_URL
+          value: http://keycloak:8180/auth/realms/quarkus
+        - name: QUARKUS_OIDC_CLIENT_AUTH_SERVER_URL
+          value: http://keycloak:8180/auth/realms/quarkus
+        imagePullPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: probing-service
+  namespace: n1-user18081998
+  labels:
+    app: probing
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: probing
+  type: LoadBalancer
